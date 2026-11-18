@@ -74,8 +74,52 @@ try:
     respuesta.raise_for_status()
     mostrar_respuesta(respuesta)
         
+        
+    # =====================================
+    #     4-PUT -Actualizar los datos del producto
+    # =====================================
+    
+    print("\n --- PUT: Modificar Producto ---")
+    
+    producto_actualizado = {
+        "title": "Notebook para desarrollo",
+        "price": "599900",
+        "description":"Notebook para programacion",
+        "category": "laptops"
+    }
+    
+    respuesta = requests.put(
+        f"{BASE_URL}/1",
+        json=producto_actualizado,
+        timeout=10
+    )
+    
+    respuesta.raise_for_status()
+    mostrar_respuesta(respuesta)
+    
+    # =====================================
+    #     5-DELETE -ELIMINAR UN PRODUCTO
+    # =====================================
+    print("\n --- DELETE: Eliminar un Producto ---")
+    
+    respuesta = requests.delete(
+        f"{BASE_URL}/1",
+        timeout=10
+    )
+    
+    respuesta.raise_for_status()
+    mostrar_respuesta(respuesta)
     
 except requests.exceptions.Timeout:
     print("Error: Se agoto el tiempo de espera")
+
+except requests.exceptions.HTTPError as error:
+    print("Error HTTP", error)
+
+except requests.exceptions.ConnectionError:
+    print("Error: no fue posible conectar con la API")
+
+except (ValueError, KeyError) as error:
+    print("Error al procesar los datos", error)
 
 
